@@ -38,6 +38,39 @@ public class Main {
 		return result;
 	}
 
+	// Applies the average (median) filter on the passed image, and returns a
+	// new image (does not mutate the original input)
+	public static BufferedImage averageFilter(BufferedImage img) throws IOException {
+		BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+
+				int sum = 0;
+				if (x - 1 > 0 && y - 1 > 0)
+					sum += img.getRGB(x - 1, y - 1);
+				if (x - 1 > 0)
+					sum += img.getRGB(x - 1, y);
+				if (x - 1 > 0 && y + 1 < img.getHeight())
+					sum += img.getRGB(x - 1, y + 1);
+				if (y - 1 > 0)
+					sum += img.getRGB(x, y - 1);
+				if (true)
+					sum += img.getRGB(x, y);
+				if (y + 1 < img.getHeight())
+					sum += img.getRGB(x, y + 1);
+				if (x + 1 < img.getWidth() && y - 1 > 0)
+					sum += img.getRGB(x + 1, y - 1);
+				if (x + 1 < img.getWidth())
+					sum += img.getRGB(x + 1, y);
+				if (x + 1 < img.getWidth() && y + 1 < img.getHeight())
+					sum += img.getRGB(x + 1, y + 1);
+
+				result.setRGB(x, y, sum / 9);
+			}
+		}
+		return result;
+	}
+
 	// Displays a given image in a JPanel with the title passed as a string
 	// argument
 	public static void showImage(String title, BufferedImage img) {
