@@ -90,5 +90,21 @@ public class Main {
 		ArrayList<BufferedImage> list = subBands(ImageIO.read(new File(fileName)));
 		// Displaying the original image
 		showImage("Original", ImageIO.read(new File(fileName)));
+
+		// EX1, applying the average filter separately on each sub-band.
+		BufferedImage red = averageFilter(list.get(0));
+		BufferedImage green = averageFilter(list.get(1));
+		BufferedImage blue = averageFilter(list.get(2));
+
+		BufferedImage result = new BufferedImage(red.getWidth(), red.getHeight(), red.getType());
+		// Combining the different color channels into one image (the same exact
+		// procedure is done for the rest of the assignment)
+		for (int x = 0; x < red.getWidth(); x++) {
+			for (int y = 0; y < red.getHeight(); y++) {
+				int newRGB = 0xFF000000 | (red.getRGB(x, y) << 16) | (green.getRGB(x, y) << 8) | blue.getRGB(x, y);
+				result.setRGB(x, y, newRGB);
+			}
+		}
+		showImage("Average", result);
 	}
 }
