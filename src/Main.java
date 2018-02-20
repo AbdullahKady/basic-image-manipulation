@@ -71,6 +71,47 @@ public class Main {
 		return result;
 	}
 
+		// Applies the sharpening filter on a passed image, and returns a new image
+	// (does not mutate the original image)
+	public static BufferedImage sharpenFilter(BufferedImage img) throws IOException {
+
+		BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+
+				int sum = 0;
+				if (x - 1 > 0 && y - 1 > 0)
+					sum -= (img.getRGB(x - 1, y - 1) & 0x000000FF);
+				if (x - 1 > 0)
+					sum -= (img.getRGB(x - 1, y) & 0x000000FF);
+				if (x - 1 > 0 && y + 1 < img.getHeight())
+					sum -= (img.getRGB(x - 1, y + 1) & 0x000000FF);
+				if (y - 1 > 0)
+					sum -= (img.getRGB(x, y - 1) & 0x000000FF);
+				if (true)
+					sum += (9 * (img.getRGB(x, y) & 0x000000FF));
+				if (y + 1 < img.getHeight())
+					sum -= (img.getRGB(x, y + 1) & 0x000000FF);
+				if (x + 1 < img.getWidth() && y - 1 > 0)
+					sum -= (img.getRGB(x + 1, y - 1) & 0x000000FF);
+				if (x + 1 < img.getWidth())
+					sum -= (img.getRGB(x + 1, y) & 0x000000FF);
+				if (x + 1 < img.getWidth() && y + 1 < img.getHeight())
+					sum -= (img.getRGB(x + 1, y + 1) & 0x000000FF);
+
+				if (sum > 255)
+					sum = 255;
+				else if (sum < 0)
+					sum = 0;
+
+				result.setRGB(x, y, sum);
+			}
+		}
+
+		return result;
+	}
+
 	// Displays a given image in a JPanel with the title passed as a string
 	// argument
 	public static void showImage(String title, BufferedImage img) {
