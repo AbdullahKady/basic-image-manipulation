@@ -147,5 +147,23 @@ public class Main {
 			}
 		}
 		showImage("Average", result);
+
+		/* -------------------------------------------------- */
+		// Applying the uniform sharpening filter on each color sub-band and
+		// then
+		// combining them altogether, and displaying the end result
+		BufferedImage result2 = new BufferedImage(red.getWidth(), red.getHeight(), red.getType());
+		red = sharpenFilter(list.get(0));
+		green = sharpenFilter(list.get(1));
+		blue = sharpenFilter(list.get(2));
+
+		for (int x = 0; x < red.getWidth(); x++) {
+			for (int y = 0; y < red.getHeight(); y++) {
+
+				int newRGB = 0xFF000000 | (red.getRGB(x, y) << 16) | (green.getRGB(x, y) << 8) | blue.getRGB(x, y);
+				result2.setRGB(x, y, newRGB);
+			}
+		}
+		showImage("Sharpened", result2);
 	}
 }
