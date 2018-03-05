@@ -112,6 +112,44 @@ public class Main {
 		return result;
 	}
 
+	// The "int c" is an index that is hard-coded for the 3 different gamma
+	// functions in the assignment
+	public static BufferedImage gamma(BufferedImage img, int c) {
+
+		BufferedImage res = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+				int pixel = img.getRGB(x, y);
+				pixel = pixel & 0x000000FF;
+
+				int newPixel;
+				switch (c) {
+
+				case 0:
+					newPixel = pixel + 50;
+					break;
+				case 1:
+					newPixel = pixel * pixel;
+					break;
+				case 2:
+					newPixel = (int) Math.sqrt((double) pixel);
+					break;
+				default:
+					newPixel = 0;
+					break;
+				}
+				// Handling overflow
+				if (newPixel > 255)
+					newPixel = 255;
+				else if (newPixel < 0)
+					newPixel = 0;
+				res.setRGB(x, y, newPixel);
+			}
+		}
+
+		return res;
+	}
+
 	// Displays a given image in a JPanel with the title passed as a string
 	// argument
 	public static void showImage(String title, BufferedImage img) {
