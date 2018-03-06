@@ -150,6 +150,61 @@ public class Main {
 		return res;
 	}
 
+
+	// This is a void method that just performs the task of exercise 3 (to
+	// simplify debugging)
+	public static void ex3(ArrayList<BufferedImage> list) throws IOException {
+
+		// EX3, applying gamma functions (specifying them as an integer argument
+		// to the function gamma)
+		// The first gamma function f(x) = x + 50
+		BufferedImage red = gamma(list.get(0), 0);
+		BufferedImage green = gamma(list.get(1), 0);
+		BufferedImage blue = gamma(list.get(2), 0);
+
+		BufferedImage result = new BufferedImage(red.getWidth(), red.getHeight(), red.getType());
+		for (int x = 0; x < red.getWidth(); x++) {
+			for (int y = 0; y < red.getHeight(); y++) {
+
+				int newRGB = 0xFF000000 | (red.getRGB(x, y) << 16) | (green.getRGB(x, y) << 8) | blue.getRGB(x, y);
+				result.setRGB(x, y, newRGB);
+			}
+		}
+		showImage("EX3, a) f(x) = x + 50", result);
+
+		// EX3, b) gamma function : f(x) = x^2, which in that case is denoted as
+		// (1) to the function gamma
+		BufferedImage result2 = new BufferedImage(red.getWidth(), red.getHeight(), red.getType());
+
+		red = gamma(list.get(0), 1);
+		green = gamma(list.get(1), 1);
+		blue = gamma(list.get(2), 1);
+		for (int x = 0; x < red.getWidth(); x++) {
+			for (int y = 0; y < red.getHeight(); y++) {
+
+				int newRGB = 0xFF000000 | (red.getRGB(x, y) << 16) | (green.getRGB(x, y) << 8) | blue.getRGB(x, y);
+				result2.setRGB(x, y, newRGB);
+			}
+		}
+		showImage("EX3, a) f(x) = x^2", result2);
+
+		// EX3, c) gamma function : f(x) = sqrt(x), which is denoted by the
+		// number (2) when the method gamma is called
+		BufferedImage result3 = new BufferedImage(red.getWidth(), red.getHeight(), red.getType());
+
+		red = gamma(list.get(0), 2);
+		green = gamma(list.get(1), 2);
+		blue = gamma(list.get(2), 2);
+		for (int x = 0; x < red.getWidth(); x++) {
+			for (int y = 0; y < red.getHeight(); y++) {
+
+				int newRGB = 0xFF000000 | (red.getRGB(x, y) << 16) | (green.getRGB(x, y) << 8) | blue.getRGB(x, y);
+				result3.setRGB(x, y, newRGB);
+			}
+		}
+		showImage("EX3, a) f(x) = sqrt(x)", result3);
+	}
+
 	// Displays a given image in a JPanel with the title passed as a string
 	// argument
 	public static void showImage(String title, BufferedImage img) {
