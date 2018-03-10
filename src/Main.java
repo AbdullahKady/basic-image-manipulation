@@ -258,5 +258,8 @@ public class Main {
 			}
 		}
 		showImage("Sharpened", result2);
+
+		ex3(list);
+
 	}
 }
